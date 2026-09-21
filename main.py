@@ -36,3 +36,40 @@ def parse_json_column(df, column):
     ]
 
     return parsed_df
+
+#Clean Dataset Format
+traffic = parse_json_column(df, "trafficSource")
+device = parse_json_column(df, "device")
+totals = parse_json_column(df, "totals")
+
+df_clean = pd.concat(
+    [
+        df.drop(columns=["trafficSource", "device", "totals"]),
+        traffic,
+        device,
+        totals
+    ],
+    axis=1
+)
+
+df_clean.head()
+
+# Data Cleaning
+## duplicates
+df_clean.duplicated().sum()
+
+df_clean.info()
+
+## check unique sess
+df_clean[
+    ["fullVisitorId", "visitId"]
+].duplicated().sum()
+
+## missing values
+missing = (
+    df_clean.isna()
+    .mean()
+    .sort_values(ascending=False)
+)
+
+missing.head(20)
