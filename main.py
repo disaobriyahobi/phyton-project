@@ -53,6 +53,7 @@ df_clean = pd.concat(
 )
 
 df_clean.head()
+df_clean.columns.tolist()
 
 # Data Cleaning
 ## duplicates
@@ -73,3 +74,16 @@ missing = (
 )
 
 missing.head(20)
+
+# Show all columns (variables) without cropping
+# 1. Set the global option using the 'pd' module
+pd.set_option('display.max_columns', None)
+# 2. Now look at your DataFrame normally
+df_clean.head()
+
+#wanna see all variables
+for col in df_clean.columns:
+    print(col)
+
+# Option 2: A simple Python list format
+print(list(df_clean.columns))
